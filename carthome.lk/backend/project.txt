@@ -1,0 +1,135 @@
+CartHome.lk
+
+marketplace to buy and sell vehicles
+
+sellers
+--------
+
+-register
+-login
+-create ads
+-edit ad
+-delete ad
+-view vehicles
+-view orders
+
+buyers
+--------
+
+-register
+-login
+-search
+-order
+-see orders
+
+modules
+--------
+sellers
+buyers
+vehicles
+orders
+
+buyer
+-fullname
+-emailaddress
+-contactnumbers
+-location
+-username
+-password
+
+seller
+-fullname
+-emailaddress
+-contactnumbers
+-location
+-username
+-password
+-individual/dealership
+-if dealership, dealer license number
+
+vehicle
+-vehicle_name
+-images
+-contactnumbers
+-price_Rs
+-get_leasing
+-make
+-model
+-YOM
+-mileage_km
+-gear
+-fuel_type
+-options
+-engine_cc
+
+order
+-buyer
+-vehicle
+-file
+-description
+-address
+-quantity
+-totalprice
+-date
+-orderStatus
+
+
+authentications:
+
+seller  
+   -create /update /delete vehicle
+
+buyer 
+   -create order
+
+API
+---
+
+backend -> API -> frontend
+
+
+User
+
+Post
+/api/v1/users
+-fullname
+-emailaddress
+-contactnumbers
+-location
+-username
+-password
+
+-user /error
+
+Get
+/api/v1/users
+
+Delete
+/api/v1/users/:id
+
+Put
+/api/v1/users/:id
+
+
+vehicle
+
+Post
+/api/v1/vehicles
+-vehicle name
+-images
+-contactnumbers
+-price Rs.
+-get leasing
+-marketplace
+-model
+-YOM
+-mileage(km)
+-gear
+-fuel type
+-options
+-engine(cc)
+
+-vehicle /error
+
+
+
