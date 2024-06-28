@@ -64,24 +64,10 @@
 //     }
 // }
 
-
 pipeline {
     agent any
-    
-    environment {
-        TAG_NAME = "${BUILD_NUMBER}"
-    }
-    
+
     stages {
-        stage('Cleanup Previous Containers and Images') {
-            steps {
-                script {
-                    sh 'docker stop $(docker ps -q) || true'
-                    sh 'docker rm $(docker ps -a -q) || true'
-                    sh 'docker rmi -f $(docker images -q) || true'
-                }
-            }
-        }
         stage('SCM Checkout') {
             steps {
                 retry(10) {
@@ -91,23 +77,21 @@ pipeline {
         }
         stage('Build Docker Images') {
             steps {
-                sh 'docker build --no-cache -t bawantha395/carthomelk-frontend:${TAG_NAME} frontend'
-                sh 'docker build --no-cache -t bawantha395/carthomelk-backend:${TAG_NAME} backend'
+                sh 'docker build -t bawantha395/carthomelk-frontend:${BUILD_NUMBER} frontend'
+                sh 'docker build -t bawantha395/carthomelk-backend:${BUILD_NUMBER} backend'
             }
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'mern-dockerhubpassword', variable: 'DOCKERHUB_PASS')]) {
-                    script {  
-                        sh "echo '${DOCKERHUB_PASS}' | docker login -u bawantha395 --password-stdin"
-                    }
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+                    sh "echo '${DOCKERHUB_PASS}' | docker login -u ${DOCKERHUB_USER} --password-stdin"
                 }
             }
         }
         stage('Push Docker Images') {
             steps {
-                sh 'docker push bawantha395/carthomelk-frontend:${TAG_NAME}'
-                sh 'docker push bawantha395/carthomelk-backend:${TAG_NAME}'
+                sh 'docker push bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+                sh 'docker push bawantha395/carthomelk-backend:${BUILD_NUMBER}'
             }
         }
     }
@@ -116,7 +100,7 @@ pipeline {
             sh 'docker logout'
         }
         success {
-            build job: 'MERN-App-CartHome-CD-Pipeline'
+            build job: 'MERN-App-CartHome-CD-Pipeline', wait: false
         }
     }
 }
