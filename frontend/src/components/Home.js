@@ -98,7 +98,7 @@ export default function Home() {
       <Logo>🚗</Logo>
       <Title>Welcome to Your Vehicles</Title>
       <Description>
-        Find the perfect vehicle or sell your own on our platform. Join us today and explore a world of opportunities.
+        Find 
       </Description>
       <TiersContainer>
         <Tier>
