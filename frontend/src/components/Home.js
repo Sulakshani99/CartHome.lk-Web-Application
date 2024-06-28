@@ -96,7 +96,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <Logo>🚗</Logo>
-      <Title>Welcome to Your Cars vvvvvvvv testing recreate ggdgdgdg succesfull!!</Title>
+      <Title>Welcome to Your Vehicles</Title>
       <Description>
         Find the perfect vehicle or sell your own on our platform. Join us today and explore a world of opportunities.
       </Description>
@@ -105,7 +105,7 @@ export default function Home() {
           <Icon>🌟</Icon>
           <Price>Advance the vehicle marketplace</Price>
           <FeaturesList>
-            <Feature>Empower buyers and S</Feature>
+            <Feature>Empower buyers and Sellers</Feature>
             <Feature>Drive innovation and satisfaction</Feature>
           </FeaturesList>
           {/* <GetStartedButton>Learn More</GetStartedButton> */}
