@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBECONFIG_CRED = credentials('kubeconfig-credentials')
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                retry(10) {
+                    git branch: 'main', url: 'https://github.com/Sulakshani99/CartHome.lk-Web-Application'
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f k8s/deployment.yaml'
+                    sh 'kubectl apply -f k8s/mongo.yaml'
+                }
+            }
+        }
+    }
+}
