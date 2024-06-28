@@ -105,7 +105,7 @@ export default function Home() {
           <Icon>🌟</Icon>
           <Price>Advance the vehicle marketplace</Price>
           <FeaturesList>
-            <Feature>Empower buyers and </Feature>
+            <Feature>Empower buyers and S</Feature>
             <Feature>Drive innovation and satisfaction</Feature>
           </FeaturesList>
           {/* <GetStartedButton>Learn More</GetStartedButton> */}
