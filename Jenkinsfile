@@ -112,11 +112,11 @@ pipeline {
         }
     }
     post {
-        success {
-            build job: 'MERN-App-CartHome-CD-Pipeline', parameters: [string(name: 'TAG_NAME', value: "${TAG_NAME}")]
-        }
         always {
             sh 'docker logout'
+        }
+        success {
+            build job: 'MERN-App-CartHome-CD-Pipeline'
         }
     }
 }
