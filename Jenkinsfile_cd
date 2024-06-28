@@ -1,23 +1,50 @@
+// pipeline {
+//     agent any
+
+//     environment {
+//         KUBECONFIG_CRED = credentials('kubeconfig-credentials')
+//     }
+
+//     stages {
+//         stage('Checkout SCM') {
+//             steps {
+//                 retry(10) {
+//                     git branch: 'main', url: 'https://github.com/Sulakshani99/CartHome.lk-Web-Application'
+//                 }
+//             }
+//         }
+//         stage('Deploy to Kubernetes') {
+//             steps {
+//                 withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
+//                     sh 'kubectl apply -f k8s/deployment.yaml'
+//                     sh 'kubectl apply -f k8s/mongo.yaml'
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+
 pipeline {
     agent any
-
-    environment {
-        KUBECONFIG_CRED = credentials('kubeconfig-credentials')
+    
+    parameters {
+        string(name: 'TAG_NAME', defaultValue: '', description: 'Docker image tag')
     }
-
+    
     stages {
-        stage('Checkout SCM') {
+        stage('Pull Docker Images') {
             steps {
-                retry(10) {
-                    git branch: 'main', url: 'https://github.com/Sulakshani99/CartHome.lk-Web-Application'
-                }
+                sh 'docker pull bawantha395/carthomelk-frontend:${TAG_NAME}'
+                sh 'docker pull bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
-        stage('Deploy to Kubernetes') {
+        stage('Run Containers') {
             steps {
-                withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
-                    sh 'kubectl apply -f k8s/deployment.yaml'
-                    sh 'kubectl apply -f k8s/mongo.yaml'
+                script {
+                    sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${TAG_NAME}'
+                    sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${TAG_NAME}'
                 }
             }
         }
