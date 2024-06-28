@@ -26,7 +26,7 @@ app.use('/api/v1/orders', OrderRouter);
 
 // Root route to display "Backend connected"
 app.get('/', (req, res) => {
-    res.send('Backend connected to localhost .');
+    res.send('Backend connected to localhost now .');
   });
 
 app.use((err,req,res,next) => {
