@@ -27,27 +27,24 @@
 
 pipeline {
     agent any
-
+    
+    parameters {
+        string(name: 'TAG_NAME', defaultValue: '', description: 'Docker image tag')
+    }
+    
     stages {
-        stage('Cleanup Previous Containers and Images') {
-            steps {
-                script {
-                    sh 'docker ps -q | xargs -r docker stop'
-                    sh 'docker ps -aq | xargs -r docker rm'
-                    sh 'docker images -q | xargs -r docker rmi -f'
-                }
-            }
-        }
         stage('Pull Docker Images') {
             steps {
-                sh 'docker pull bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
-                sh 'docker pull bawantha395/carthomelk-backend:${BUILD_NUMBER}'
+                sh 'docker pull bawantha395/carthomelk-frontend:${TAG_NAME}'
+                sh 'docker pull bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
-        stage('Run Docker Containers') {
+        stage('Run Containers') {
             steps {
-                sh 'docker run -d --name carthomelk-frontend -p 3000:3000 bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
-                sh 'docker run -d --name carthomelk-backend -p 3001:3001 bawantha395/carthomelk-backend:${BUILD_NUMBER}'
+                script {
+                    sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${TAG_NAME}'
+                    sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${TAG_NAME}'
+                }
             }
         }
     }
@@ -57,3 +54,39 @@ pipeline {
         }
     }
 }
+
+
+
+
+// pipeline {
+//     agent any
+
+//     stages {
+//         stage('Cleanup Previous Containers and Images') {
+//             steps {
+//                 script {
+//                     sh 'docker ps -q | xargs -r docker stop'
+//                     sh 'docker ps -aq | xargs -r docker rm'
+//                     sh 'docker images -q | xargs -r docker rmi -f'
+//                 }
+//             }
+//         }
+//         stage('Pull Docker Images') {
+//             steps {
+//                 sh 'docker pull bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+//                 sh 'docker pull bawantha395/carthomelk-backend:${BUILD_NUMBER}'
+//             }
+//         }
+//         stage('Run Docker Containers') {
+//             steps {
+//                 sh 'docker run -d --name carthomelk-frontend -p 3000:3000 bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+//                 sh 'docker run -d --name carthomelk-backend -p 3001:3001 bawantha395/carthomelk-backend:${BUILD_NUMBER}'
+//             }
+//         }
+//     }
+//     post {
+//         always {
+//             sh 'docker logout'
+//         }
+//     }
+// }
