@@ -53,7 +53,6 @@
 // }
 
 
-
 pipeline {
     agent any
     
@@ -90,23 +89,26 @@ pipeline {
                 sh 'docker push bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
-        stage('Deploy with Docker Compose') {
+        stage('Pull Docker Images') {
             steps {
-                script {
-                    sh 'docker-compose down'
-                    sh 'TAG_NAME=${TAG_NAME} docker-compose up -d --force-recreate'
-                }
+                sh 'docker pull bawantha395/carthomelk-frontend:${TAG_NAME}'
+                sh 'docker pull bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
-        stage('Cleanup Old Images') {
+        stage('Run Containers') {
             steps {
-                sh 'docker image prune -f'
+                sh 'docker run -d --name frontend -p 80:80 bawantha395/carthomelk-frontend:${TAG_NAME}'
+                sh 'docker run -d --name backend -p 8080:8080 bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
     }
     post {
         always {
             sh 'docker logout'
+        }
+        cleanup {
+            sh 'docker stop $(docker ps -a -q)'
+            sh 'docker rm $(docker ps -a -q)'
         }
     }
 }
