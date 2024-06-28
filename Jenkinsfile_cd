@@ -29,21 +29,21 @@ pipeline {
     agent any
     
     parameters {
-        string(name: 'TAG_NAME', defaultValue: '', description: 'Docker image tag')
+        string(name: 'BUILD_NUMBER', defaultValue: '', description: 'Docker image tag')
     }
     
     stages {
         stage('Pull Docker Images') {
             steps {
-                sh 'docker pull bawantha395/carthomelk-frontend:${TAG_NAME}'
-                sh 'docker pull bawantha395/carthomelk-backend:${TAG_NAME}'
+                sh 'docker pull bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+                sh 'docker pull bawantha395/carthomelk-backend:${BUILD_NUMBER}'
             }
         }
         stage('Run Containers') {
             steps {
                 script {
-                    sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${TAG_NAME}'
-                    sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${TAG_NAME}'
+                    sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+                    sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${BUILD_NUMBER}'
                 }
             }
         }

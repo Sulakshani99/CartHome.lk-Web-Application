@@ -64,12 +64,11 @@
 //     }
 // }
 
+
+
 pipeline {
     agent any
     
-    environment {
-        TAG_NAME = "${BUILD_NUMBER}"
-    }
     
     stages {
         stage('Cleanup Previous Containers and Images') {
@@ -90,8 +89,8 @@ pipeline {
         }
         stage('Build Docker Images') {
             steps {
-                sh 'docker build --no-cache -t bawantha395/carthomelk-frontend:${TAG_NAME} frontend'
-                sh 'docker build --no-cache -t bawantha395/carthomelk-backend:${TAG_NAME} backend'
+                sh 'docker build --no-cache -t bawantha395/carthomelk-frontend:${BUILD_NUMBER} frontend'
+                sh 'docker build --no-cache -t bawantha395/carthomelk-backend:${BUILD_NUMBER} backend'
             }
         }
         stage('Login to Docker Hub') {
@@ -105,14 +104,14 @@ pipeline {
         }
         stage('Push Docker Images') {
             steps {
-                sh 'docker push bawantha395/carthomelk-frontend:${TAG_NAME}'
-                sh 'docker push bawantha395/carthomelk-backend:${TAG_NAME}'
+                sh 'docker push bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
+                sh 'docker push bawantha395/carthomelk-backend:${BUILD_NUMBER}'
             }
         }
     }
     post {
         success {
-            build job: 'MERN-App-CartHome-CD-Pipeline', parameters: [string(name: 'TAG_NAME', value: TAG_NAME)]
+            build job: 'MERN-App-CartHome-CD-Pipeline', parameters: [string(name: 'BUILD_NUMBER', value: BUILD_NUMBER)]
         }
     }
 }
