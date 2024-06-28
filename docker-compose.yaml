@@ -1,0 +1,22 @@
+
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb+srv://bawanthasulakshani:bawanthasulakshani@carthomelk.nu0ncxv.mongodb.net/?retryWrites=true&w=majority&appName=CartHomelk
+      JWT_TOKEN_KEY: asdhjklslwkj4567bnmsghjvbbmtyu
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
