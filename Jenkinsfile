@@ -43,8 +43,5 @@ pipeline {
         always {
             sh 'docker logout'
         }
-        success {
-            build job: 'MERN-App-CartHome-CD-Pipeline'
-        }
     }
 }
