@@ -71,15 +71,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Cleanup Previous Containers and Images') {
-            steps {
-                script {
-                    sh 'docker ps -q | xargs -r docker stop'
-                    sh 'docker ps -aq | xargs -r docker rm'
-                    sh 'docker images -q | xargs -r docker rmi -f'
-                }
-            }
-        }
         stage('SCM Checkout') {
             steps {
                 retry(10) {
