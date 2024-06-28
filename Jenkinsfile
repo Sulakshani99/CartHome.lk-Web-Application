@@ -1,6 +1,7 @@
+
 pipeline {
     agent any
-
+    
     stages {
         stage('SCM Checkout') {
             steps {
@@ -17,8 +18,10 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-                    sh "echo '${DOCKERHUB_PASS}' | docker login -u ${DOCKERHUB_USER} --password-stdin"
+                withCredentials([string(credentialsId: 'mern-dockerhubpassword', variable: 'DOCKERHUB_PASS')]) {
+                    script {  
+                        sh "echo '${DOCKERHUB_PASS}' | docker login -u bawantha395 --password-stdin"
+                    }
                 }
             }
         }
