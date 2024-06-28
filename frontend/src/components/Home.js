@@ -96,7 +96,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <Logo>🚗</Logo>
-      <Title>Welcome to Your Cars Testing pipeline</Title>
+      <Title>Welcome to Your Cars </Title>
       <Description>
         Find the perfect vehicle or sell your own on our platform. Join us today and explore a world of opportunities.
       </Description>
