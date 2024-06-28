@@ -65,7 +65,6 @@
 // }
 
 
-
 pipeline {
     agent any
     
@@ -99,7 +98,7 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([string(credentialsId: 'mern-dockerhubpassword', variable: 'DOCKERHUB_PASS')]) {
-                    script {
+                    script {  
                         sh "echo '${DOCKERHUB_PASS}' | docker login -u bawantha395 --password-stdin"
                     }
                 }
@@ -113,11 +112,11 @@ pipeline {
         }
     }
     post {
+        success {
+            build job: 'MERN-App-CartHome-CD-Pipeline', parameters: [string(name: 'TAG_NAME', value: "${TAG_NAME}")]
+        }
         always {
             sh 'docker logout'
-        }
-        success {
-            build job: 'MERN-App-CartHome-CD-Pipeline', parameters: [string(name: 'TAG_NAME', value: TAG_NAME)]
         }
     }
 }
