@@ -106,9 +106,6 @@ pipeline {
         always {
             sh 'docker logout'
         }
-        cleanup {
-            sh 'docker stop $(docker ps -a -q)'
-            sh 'docker rm $(docker ps -a -q)'
-        }
+        
     }
 }
