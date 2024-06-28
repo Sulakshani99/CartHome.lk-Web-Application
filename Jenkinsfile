@@ -10,11 +10,10 @@ pipeline {
                 }
             }
         }
-        stage('Deploy with Docker Compose') {
+        stage('Build Docker Images') {
             steps {
-                script {
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker build -t bawantha395/carthomelk-frontend:${BUILD_NUMBER} frontend'
+                sh 'docker build -t bawantha395/carthomelk-backend:${BUILD_NUMBER} backend'
             }
         }
         stage('Login to Docker Hub') {
@@ -30,6 +29,13 @@ pipeline {
             steps {
                 sh 'docker push bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
                 sh 'docker push bawantha395/carthomelk-backend:${BUILD_NUMBER}'
+            }
+        }
+        stage('Deploy with Docker Compose') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
             }
         }
     }
