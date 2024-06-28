@@ -29,15 +29,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Cleanup Previous Containers and Images') {
-            steps {
-                script {
-                    sh 'docker ps -q | xargs -r docker stop'
-                    sh 'docker ps -aq | xargs -r docker rm'
-                    sh 'docker images -q | xargs -r docker rmi -f'
-                }
-            }
-        }
         stage('Pull Docker Images') {
             steps {
                 sh 'docker pull bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
@@ -49,6 +40,11 @@ pipeline {
                 sh 'docker run -d --name carthomelk-frontend -p 3000:3000 bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
                 sh 'docker run -d --name carthomelk-backend -p 3001:3001 bawantha395/carthomelk-backend:${BUILD_NUMBER}'
             }
+        }
+    }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
