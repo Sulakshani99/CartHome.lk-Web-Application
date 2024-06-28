@@ -97,8 +97,8 @@ pipeline {
         }
         stage('Run Containers') {
             steps {
-                sh 'docker run -d --name frontend -p 80:80 bawantha395/carthomelk-frontend:${TAG_NAME}'
-                sh 'docker run -d --name backend -p 8080:8080 bawantha395/carthomelk-backend:${TAG_NAME}'
+                sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${TAG_NAME}'
+                sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${TAG_NAME}'
             }
         }
     }
