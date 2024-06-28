@@ -52,7 +52,6 @@
 //     }
 // }
 
-
 pipeline {
     agent any
     
@@ -61,6 +60,15 @@ pipeline {
     }
     
     stages {
+        stage('Cleanup Previous Containers and Images') {
+            steps {
+                script {
+                    sh 'docker stop $(docker ps -q) || true'
+                    sh 'docker rm $(docker ps -a -q) || true'
+                    sh 'docker rmi -f $(docker images -q) || true'
+                }
+            }
+        }
         stage('SCM Checkout') {
             steps {
                 retry(10) {
@@ -106,6 +114,5 @@ pipeline {
         always {
             sh 'docker logout'
         }
-        
     }
 }
