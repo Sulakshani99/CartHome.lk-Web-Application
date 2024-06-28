@@ -25,7 +25,6 @@
 // }
 
 
-
 pipeline {
     agent any
     
@@ -43,6 +42,10 @@ pipeline {
         stage('Run Containers') {
             steps {
                 script {
+                    sh 'docker stop frontend || true'
+                    sh 'docker rm frontend || true'
+                    sh 'docker stop backend || true'
+                    sh 'docker rm backend || true'
                     sh 'docker run -d --name frontend -p 3000:3000 bawantha395/carthomelk-frontend:${TAG_NAME}'
                     sh 'docker run -d --name backend -p 3001:3001 bawantha395/carthomelk-backend:${TAG_NAME}'
                 }
