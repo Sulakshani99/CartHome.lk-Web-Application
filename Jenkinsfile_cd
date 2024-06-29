@@ -1,29 +1,3 @@
-// pipeline {
-//     agent any
-
-//     environment {
-//         KUBECONFIG_CRED = credentials('kubeconfig-credentials')
-//     }
-
-//     stages {
-//         stage('Checkout SCM') {
-//             steps {
-//                 retry(10) {
-//                     git branch: 'main', url: 'https://github.com/Sulakshani99/CartHome.lk-Web-Application'
-//                 }
-//             }
-//         }
-//         stage('Deploy to Kubernetes') {
-//             steps {
-//                 withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
-//                     sh 'kubectl apply -f k8s/deployment.yaml'
-//                     sh 'kubectl apply -f k8s/mongo.yaml'
-//                 }
-//             }
-//         }
-//     }
-// }
-
 
 pipeline {
     agent any
@@ -60,37 +34,3 @@ pipeline {
 }
 
 
-
-
-// pipeline {
-//     agent any
-
-//     stages {
-//         stage('Cleanup Previous Containers and Images') {
-//             steps {
-//                 script {
-//                     sh 'docker ps -q | xargs -r docker stop'
-//                     sh 'docker ps -aq | xargs -r docker rm'
-//                     sh 'docker images -q | xargs -r docker rmi -f'
-//                 }
-//             }
-//         }
-//         stage('Pull Docker Images') {
-//             steps {
-//                 sh 'docker pull bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
-//                 sh 'docker pull bawantha395/carthomelk-backend:${BUILD_NUMBER}'
-//             }
-//         }
-//         stage('Run Docker Containers') {
-//             steps {
-//                 sh 'docker run -d --name carthomelk-frontend -p 3000:3000 bawantha395/carthomelk-frontend:${BUILD_NUMBER}'
-//                 sh 'docker run -d --name carthomelk-backend -p 3001:3001 bawantha395/carthomelk-backend:${BUILD_NUMBER}'
-//             }
-//         }
-//     }
-//     post {
-//         always {
-//             sh 'docker logout'
-//         }
-//     }
-// }
