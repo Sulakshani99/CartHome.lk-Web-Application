@@ -96,9 +96,9 @@ export default function Home() {
   return (
     <HomeContainer>
       <Logo>🚗</Logo>
-      <Title>Welcome to Your Vehicles in 2024 </Title>
+      <Title>Welcome to Your Vehicles  </Title>
       <Description>
-        Find 
+        Find your dream vehecle
       </Description>
       <TiersContainer>
         <Tier>
