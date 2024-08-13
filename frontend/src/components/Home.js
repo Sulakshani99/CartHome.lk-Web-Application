@@ -103,7 +103,7 @@ export default function Home() {
       <TiersContainer>
         <Tier>
           <Icon>🌟</Icon>
-          <Price>Advance the vehicle marketplace</Price>
+          <Price>Advance the vehicle markeggtplace</Price>
           <FeaturesList>
             <Feature>Empower buyers and Sellers</Feature>
             <Feature>Drive innovation and satisfaction</Feature>
