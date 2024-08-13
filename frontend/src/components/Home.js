@@ -98,7 +98,7 @@ export default function Home() {
       <Logo>🚗</Logo>
       <Title>Welcome to Your Vehicles  </Title>
       <Description>
-        Find your dream vehecle
+        Find your dream veheclesssss
       </Description>
       <TiersContainer>
         <Tier>
