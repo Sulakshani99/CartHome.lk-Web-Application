@@ -98,14 +98,14 @@ export default function Home() {
       <Logo>🚗</Logo>
       <Title>Welcome to Your Vehicles  </Title>
       <Description>
-        Find your dream veheclesssss
+        asdsdFind your dream veheclesssss
       </Description>
       <TiersContainer>
         <Tier>
           <Icon>🌟</Icon>
           <Price>Advance the vehicle markeggtplace</Price>
           <FeaturesList>
-            <Feature>Empower buyjjjers and Sellers</Feature>
+            <Feature>Empowrrrer buyjjjers and Sellers</Feature>
             <Feature>Drive innovation and satisfaction</Feature>
           </FeaturesList>
           {/* <GetStartedButton>Learn More</GetStartedButton> */}
